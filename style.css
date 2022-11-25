@@ -1,0 +1,24 @@
+html {
+    box-sizing: border-box;
+}
+
+#numpad {
+    display: flex;
+    flex-direction: column;  
+    flex-wrap: wrap;
+    width: 300px;
+    height: 400px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
+
+
+
+#numpadBut {
+    width: 33%;
+    height: 32.8%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
