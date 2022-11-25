@@ -2,23 +2,70 @@ html {
     box-sizing: border-box;
 }
 
+#btnContainer {
+    display: flex;
+    flex-direction: row;
+}
+
 #numpad {
     display: flex;
-    flex-direction: column;  
+    flex-direction: row;  
     flex-wrap: wrap;
+    justify-content: space-around;
     width: 300px;
-    height: 400px;
+    height: 500px;
     border-style: solid;
     border-color: black;
     border-width: 1px;
 }
 
-
-
 #numpadBut {
+    background-color: whitesmoke;
+    font-size: larger;
     width: 33%;
-    height: 32.8%;
+    height: 25%;
     border-style: solid;
     border-width: 1px;
     border-color: black;
+}
+
+#zeroKey {
+    background-color: whitesmoke;
+    font-size: larger;
+    width: 100%;
+    height: 25%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+#numpadBut:hover, 
+#zeroKey:hover {
+    background-color: lightblue;
+}
+
+#actionPad {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100px;
+    height: 502px;
+}
+
+#actionBut1,
+#actionBut2, 
+#actionBut3, 
+#actionBut4,
+#actionBut5 {
+    background-color: whitesmoke;
+    font-size: larger;
+    width: 100%;
+    height: 20%%;
+}
+
+#actionBut1:hover, 
+#actionBut2:hover, 
+#actionBut3:hover, 
+#actionBut4:hover,
+#actionBut5:hover {    
+    background-color: lightblue;
 }
