@@ -1,3 +1,38 @@
+const container = document.querySelector('#container');
+
+let answer = null;
+let value = [];
+let operator = [];
+let eqCount = 0;
+let eqString = "";
+
+
+
+
+const screen = document.createElement('div');
+screen.setAttribute('id', 'screen');
+
+const fullScreen = document.createElement('div');
+fullScreen.setAttribute('id', 'fullScreen')
+
+const eqDisplay = document.createElement('div');
+eqDisplay.setAttribute('id', 'eqDisplay');
+fullScreen.appendChild(eqDisplay);
+
+
+const numDisplay = document.createElement('div');
+numDisplay.setAttribute('id', 'numDisplay');
+fullScreen.appendChild(numDisplay);
+
+screen.appendChild(fullScreen);
+
+const clearBut = document.createElement('button');
+clearBut.setAttribute('id', 'clearBut');
+clearBut.textContent = 'C';
+clearBut.addEventListener("click", numPress);
+screen.appendChild(clearBut);
+
+
 const btnContainer = document.querySelector('#btnContainer');
 
 function createPad(){
@@ -8,19 +43,26 @@ function createPad(){
     actionPad.setAttribute('id', 'actionPad');    
     btnContainer.appendChild(actionPad);
 
-    for(i = 0; i < 9; i++){
+    for(i = 0; i < 12; i++){
         const numpadBut = document.createElement('button');
-        numpadBut.setAttribute('id', 'numpadBut');
-        numpadBut.textContent = i + 1;
+        numpadBut.setAttribute('class', 'numpadBut');
+        if((i + 1) < 10){
+            numpadBut.textContent = i + 1;
+            numpadBut.setAttribute('id', numpadBut.textContent);
+        } else if(i + 1 === 10) {
+            numpadBut.textContent = '.';
+            numpadBut.setAttribute('id', numpadBut.textContent);
+        } else if(i + 1 === 11) {
+            numpadBut.textContent = '0';
+            numpadBut.setAttribute('id', numpadBut.textContent);
+        } else if(i + 1 === 12){
+            numpadBut.textContent = '=';
+            numpadBut.setAttribute('id', numpadBut.textContent);
+        }
+        
         numpadBut.addEventListener("click", numPress);
         numpad.appendChild(numpadBut);
     };
-
-    const numpadBut = document.createElement('button');
-    numpadBut.setAttribute('id', 'zeroKey');
-    numpadBut.textContent = "0";
-    numpadBut.addEventListener("click", numPress);
-    numpad.appendChild(numpadBut);
 
     const actionBut1 = document.createElement('button');
     actionBut1.setAttribute('id', 'actionBut1')
@@ -46,19 +88,92 @@ function createPad(){
     actionBut4.addEventListener("click", numPress);
     actionPad.appendChild(actionBut4);
 
-    const actionBut5 = document.createElement('button');
-    actionBut5.setAttribute('id', 'actionBut5')
-    actionBut5.textContent = "Enter";
-    actionBut5.addEventListener("click", numPress);
-    actionPad.appendChild(actionBut5);
-
 
 }
 
 createPad();
 
-function numPress(){
-    console.log(this.textContent);
+container.appendChild(screen);
+container.appendChild(btnContainer);
+
+
+
+function numPress() {   
+
+    if(this.textContent === "C"){               
+        answer = null; 
+        eqString = "";   
+        value = [];
+        operator = [];
+        eqCount = 0;
+        eqDisplay.textContent = "";
+        numDisplay.textContent = ""; 
+        console.log(value);
+        console.log(operator);       
+    } else if (this.textContent === "+" || this.textContent === "-" ||
+        this.textContent === "*" || this.textContent === "/"){
+            if(numDisplay.textContent === ""){
+                console.log("error");
+            } else {
+                operator[eqCount] = this.textContent;
+                value[eqCount] = numDisplay.textContent;
+                eqDisplay.textContent += `${value[eqCount]} ${operator[eqCount]} `;
+                eqCount++;
+                numDisplay.textContent = "";
+            } 
+            
+            console.log(value);
+            console.log(operator);            
+    } else if (this.textContent === "=") {
+        if (value.length === 0){
+            console.log('error');
+        } else if(numDisplay.textContent === ""){
+            console.log('error');
+        } else {
+            value[eqCount] = numDisplay.textContent;
+            eqDisplay.textContent += `${numDisplay.textContent} =`;
+            numDisplay.textContent = "";
+            for(l = 0; l < value.length; l++){
+                eqString += value[l];
+                if(operator[l] !== undefined){
+                    eqString += operator[l];
+                }                
+            }
+            console.log(eqString);
+            answer = eval(eqString);
+            numDisplay.textContent = eval(eqString);
+            
+        }
+    } else {
+        if(answer !== null){
+            answer = null; 
+            eqString = "";   
+            value = [];
+            operator = [];
+            eqCount = 0;
+            eqDisplay.textContent = "";
+            numDisplay.textContent = ""; 
+        }
+        numDisplay.textContent += this.textContent;
+    }
+
+    
 }
+
+function operate(value1, value2, operator){
+    if (operator === "+"){
+        return value1 + value2;
+    } else if (operator === "-"){
+        return value1 - value2;
+    } else if (operator === "*"){
+        return value1 * value2;
+    } else if (operator === "/"){
+        return value1 / value2;
+    }
+}
+
+
+
+
 
 
